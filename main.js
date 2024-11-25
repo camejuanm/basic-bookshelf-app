@@ -1,21 +1,23 @@
 const books = [];
+const RENDER_EVENT = 'render-bookshelf';
+// const SAVED_EVENT = 'saved-todo';
+// const STORAGE_KEY = 'TODO_APPS';
 
+document.addEventListener(RENDER_EVENT, function () {
+    const incompleteBookList = document.getElementById('incompleteBookList');
+    incompleteBookList.innerHTML = '';
 
-// document.addEventListener(RENDER_EVENT, function () {
-//     const uncompletedTODOList = document.getElementById('todos');
-//     uncompletedTODOList.innerHTML = '';
+    const completeBookList = document.getElementById('completeBookList');
+    completeBookList.innerHTML='';
 
-//     const completedTODOList = document.getElementById('completed-todos');
-//     completedTODOList.innerHTML='';
-
-//     for (const todoItem of todos) {
-//         const todoElement = makeTodo(todoItem);
-//         if (!todoItem.isCompleted)
-//             uncompletedTODOList.append(todoElement); 
-//         else 
-//             completedTODOList.append(todoElement);
-//     }
-// });
+    for (const bookItem of books) {
+        const bookElement = makeBook(bookItem);
+        if (!bookItem.isCompleted)
+            incompleteBookList.append(bookElement); 
+        else 
+        completeBookList.append(bookElement);
+    }
+});
 
 function makeBook(bookObject) {
     const bookTitle = document.createElement('h3');
@@ -100,7 +102,7 @@ function addBook() {
     const bookObject = generateBookObject(generatedId, title, author, year, completed);
 
     books.push(bookObject);
-    // document.dispatchEvent(new Event(RENDER_EVENT));
+    document.dispatchEvent(new Event(RENDER_EVENT));
     // saveData();
 }
 
