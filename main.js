@@ -52,8 +52,7 @@ function makeBook(bookObject) {
         completeButton.innerText = 'Belum Selesai Dibaca'
 
         completeButton.addEventListener('click', function () {
-            //TODO: ganti supaya bisa toggle between complete and incomplete
-            // undoBookFromCompleted(todoObject.id);
+            undoBookFromCompleted(bookObject.id);
         });
 
         const buttonList = document.createElement('div');
@@ -66,8 +65,7 @@ function makeBook(bookObject) {
         completeButton.innerText = 'Selesai Dibaca'
 
         completeButton.addEventListener('click', function () {
-            //TODO: ganti supaya bisa toggle between complete and incomplete
-            // addBookToCompleted(todoObject.id);
+            addBookToCompleted(bookObject.id);
         });
 
         const buttonList = document.createElement('div');
@@ -113,6 +111,33 @@ document.addEventListener('DOMContentLoaded', function () {
         addBook();
     });
 });
+
+function findBookIndex(bookId) {
+    for (const index in books) {
+        if (books[index].id === bookId) {
+            return index;
+        }
+    }
+    return -1;
+}
+
+function addBookToCompleted(bookId) {
+    const bookTarget = findBookIndex(bookId);
+    if (bookTarget == null) return;
+
+    books[bookTarget].isCompleted = true;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    //saveData();
+}
+
+function undoBookFromCompleted(bookId) {
+    const bookTarget = findBookIndex(bookId);
+    if (bookTarget == null) return;
+
+    books[bookTarget].isCompleted = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    //saveData();
+}
 
 function updateStatusOnSubmitButtonText(bookIsCompleteCheckbox) {
     if (bookIsCompleteCheckbox.checked) {
