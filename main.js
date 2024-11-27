@@ -11,7 +11,7 @@ document.addEventListener(RENDER_EVENT, function () {
 
     for (const bookItem of books) {
         const bookElement = makeBook(bookItem);
-        if (!bookItem.isCompleted)
+        if (!bookItem.isComplete)
             incompleteBookList.append(bookElement);
         else
             completeBookList.append(bookElement);
@@ -34,15 +34,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function makeBook(bookObject) {
     const bookTitle = document.createElement('h3');
-    bookTitle.innerText = bookObject.bookTitle;
+    bookTitle.innerText = bookObject.title;
     bookTitle.setAttribute('data-testid', 'bookItemTitle');
 
     const bookAuthor = document.createElement('p')
-    bookAuthor.innerText = `Penulis: ${bookObject.bookAuthor}`;
+    bookAuthor.innerText = `Penulis: ${bookObject.author}`;
     bookAuthor.setAttribute('data-testid', 'bookItemAuthor');
 
     const bookYear = document.createElement('p');
-    bookYear.innerText = `Tahun: ${bookObject.bookYear}`;
+    bookYear.innerText = `Tahun: ${bookObject.year}`;
 
     const deleteButton = document.createElement('button');
     deleteButton.setAttribute('data-testid', 'bookItemDeleteButton');
@@ -53,22 +53,22 @@ function makeBook(bookObject) {
     editButton.innerText = 'Edit Buku';
 
     const container = document.createElement('div');
-    container.setAttribute('data-bookid', bookObject.bookId);
+    container.setAttribute('data-bookid', bookObject.id);
     container.setAttribute('data-testid', 'bookItem');
 
     container.append(bookTitle, bookAuthor, bookYear);
 
     deleteButton.addEventListener('click', function () {
-        deleteBook(bookObject.bookId);
+        deleteBook(bookObject.id);
     })
 
-    if (bookObject.isCompleted) {
+    if (bookObject.isComplete) {
         const completeButton = document.createElement('button');
         completeButton.setAttribute('data-testid', 'bookItemIsCompleteButton');
         completeButton.innerText = 'Belum Selesai Dibaca'
 
         completeButton.addEventListener('click', function () {
-            undoBookFromCompleted(bookObject.bookId);
+            undoBookFromCompleted(bookObject.id);
         });
 
         const buttonList = document.createElement('div');
@@ -81,7 +81,7 @@ function makeBook(bookObject) {
         completeButton.innerText = 'Selesai Dibaca'
 
         completeButton.addEventListener('click', function () {
-            addBookToCompleted(bookObject.bookId);
+            addBookToCompleted(bookObject.id);
         });
 
         const buttonList = document.createElement('div');
@@ -92,13 +92,13 @@ function makeBook(bookObject) {
     return container;
 }
 
-function generateBookObject(bookId, bookTitle, bookAuthor, bookYear, isCompleted) {
+function generateBookObject(id, title, author, year, isComplete) {
     return {
-        bookId,
-        bookTitle,
-        bookAuthor,
-        bookYear,
-        isCompleted,
+        id,
+        title,
+        author,
+        year,
+        isComplete,
     };
 }
 
@@ -147,7 +147,7 @@ function addBook() {
 
 function findBookIndex(bookId) {
     for (const index in books) {
-        if (books[index].bookId === bookId) {
+        if (books[index].id === bookId) {
             return index;
         }
     }
@@ -158,7 +158,7 @@ function addBookToCompleted(bookId) {
     const targetIndex = findBookIndex(bookId);
     if (targetIndex == -1) return;
 
-    books[targetIndex].isCompleted = true;
+    books[targetIndex].isComplete = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
@@ -167,7 +167,7 @@ function undoBookFromCompleted(bookId) {
     const targetIndex = findBookIndex(bookId);
     if (targetIndex == -1) return;
 
-    books[targetIndex].isCompleted = false;
+    books[targetIndex].isComplete = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     saveData();
 }
