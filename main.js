@@ -213,8 +213,13 @@ function searchBook() {
         return;
     }
     if (document.getElementById("searchResult") != null) {
-        return
-    } 
+        if (searchForm.nextElementSibling === resultElements) {
+            console.log("here");
+        } else {
+            searchForm.nextElementSibling.remove();
+            searchForm.after(resultElements);
+        } 
+    }
     searchForm.after(resultElements);
 }
 
