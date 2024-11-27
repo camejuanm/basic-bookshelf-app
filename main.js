@@ -1,21 +1,34 @@
 const books = [];
 const RENDER_EVENT = 'render-bookshelf';
-// const SAVED_EVENT = 'saved-todo';
-// const STORAGE_KEY = 'TODO_APPS';
+const STORAGE_KEY = 'BOOKSHELF';
 
 document.addEventListener(RENDER_EVENT, function () {
     const incompleteBookList = document.getElementById('incompleteBookList');
     incompleteBookList.innerHTML = '';
 
     const completeBookList = document.getElementById('completeBookList');
-    completeBookList.innerHTML='';
+    completeBookList.innerHTML = '';
 
     for (const bookItem of books) {
         const bookElement = makeBook(bookItem);
         if (!bookItem.isCompleted)
-            incompleteBookList.append(bookElement); 
-        else 
-        completeBookList.append(bookElement);
+            incompleteBookList.append(bookElement);
+        else
+            completeBookList.append(bookElement);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const bookForm = document.getElementById('bookForm');
+    bookForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        addBook();
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (isStorageExist()) {
+        loadDataFromStorage();
     }
 });
 
@@ -32,18 +45,18 @@ function makeBook(bookObject) {
     bookYear.innerText = `Tahun: ${bookObject.bookYear}`;
 
     const deleteButton = document.createElement('button');
-    deleteButton.setAttribute('data-testid','bookItemDeleteButton');
+    deleteButton.setAttribute('data-testid', 'bookItemDeleteButton');
     deleteButton.innerText = 'Hapus Buku';
 
     const editButton = document.createElement('button');
-    editButton.setAttribute('data-testid','bookItemEditButton');
+    editButton.setAttribute('data-testid', 'bookItemEditButton');
     editButton.innerText = 'Edit Buku';
 
     const container = document.createElement('div');
-    container.setAttribute('data-bookid', 'bookObject.bookId');
+    container.setAttribute('data-bookid', bookObject.bookId);
     container.setAttribute('data-testid', 'bookItem');
 
-    container.append(bookTitle,bookAuthor,bookYear);
+    container.append(bookTitle, bookAuthor, bookYear);
 
     deleteButton.addEventListener('click', function () {
         deleteBook(bookObject.bookId);
@@ -93,6 +106,31 @@ function generateId() {
     return +new Date();
 }
 
+function isStorageExist() {
+    if (typeof (Storage) == undefined) {
+        alert('Browser tidak support storage');
+        return false;
+    } else return true
+}
+
+function loadDataFromStorage() {
+    const serializedData = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(serializedData);
+
+    if (data != null) {
+        for (const book of data) {
+            books.push(book);
+        }
+    }
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+function saveData() {
+    if (isStorageExist) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+    };
+}
+
 function addBook() {
     const title = document.getElementById('bookFormTitle').value;
     const author = document.getElementById('bookFormAuthor').value;
@@ -104,16 +142,8 @@ function addBook() {
 
     books.push(bookObject);
     document.dispatchEvent(new Event(RENDER_EVENT));
-    // saveData();
+    saveData();
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    const bookForm = document.getElementById('bookForm');
-    bookForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        addBook();
-    });
-});
 
 function findBookIndex(bookId) {
     for (const index in books) {
@@ -130,7 +160,7 @@ function addBookToCompleted(bookId) {
 
     books[targetIndex].isCompleted = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
-    //saveData();
+    saveData();
 }
 
 function undoBookFromCompleted(bookId) {
@@ -139,7 +169,7 @@ function undoBookFromCompleted(bookId) {
 
     books[targetIndex].isCompleted = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
-    //saveData();
+    saveData();
 }
 
 function deleteBook(bookId) {
@@ -147,6 +177,7 @@ function deleteBook(bookId) {
     if (targetIndex == -1) return;
     books.splice(targetIndex, 1);
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function updateStatusOnSubmitButtonText(bookIsCompleteCheckbox) {
