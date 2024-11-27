@@ -39,12 +39,15 @@ function makeBook(bookObject) {
     editButton.setAttribute('data-testid','bookItemEditButton');
     editButton.innerText = 'Edit Buku';
 
-
     const container = document.createElement('div');
     container.setAttribute('data-bookid', 'bookObject.bookId');
     container.setAttribute('data-testid', 'bookItem');
 
     container.append(bookTitle,bookAuthor,bookYear);
+
+    deleteButton.addEventListener('click', function () {
+        deleteBook(bookObject.bookId);
+    })
 
     if (bookObject.isCompleted) {
         const completeButton = document.createElement('button');
@@ -52,7 +55,7 @@ function makeBook(bookObject) {
         completeButton.innerText = 'Belum Selesai Dibaca'
 
         completeButton.addEventListener('click', function () {
-            undoBookFromCompleted(bookObject.id);
+            undoBookFromCompleted(bookObject.bookId);
         });
 
         const buttonList = document.createElement('div');
@@ -65,7 +68,7 @@ function makeBook(bookObject) {
         completeButton.innerText = 'Selesai Dibaca'
 
         completeButton.addEventListener('click', function () {
-            addBookToCompleted(bookObject.id);
+            addBookToCompleted(bookObject.bookId);
         });
 
         const buttonList = document.createElement('div');
@@ -114,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function findBookIndex(bookId) {
     for (const index in books) {
-        if (books[index].id === bookId) {
+        if (books[index].bookId === bookId) {
             return index;
         }
     }
@@ -122,21 +125,28 @@ function findBookIndex(bookId) {
 }
 
 function addBookToCompleted(bookId) {
-    const bookTarget = findBookIndex(bookId);
-    if (bookTarget == null) return;
+    const targetIndex = findBookIndex(bookId);
+    if (targetIndex == -1) return;
 
-    books[bookTarget].isCompleted = true;
+    books[targetIndex].isCompleted = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
     //saveData();
 }
 
 function undoBookFromCompleted(bookId) {
-    const bookTarget = findBookIndex(bookId);
-    if (bookTarget == null) return;
+    const targetIndex = findBookIndex(bookId);
+    if (targetIndex == -1) return;
 
-    books[bookTarget].isCompleted = false;
+    books[targetIndex].isCompleted = false;
     document.dispatchEvent(new Event(RENDER_EVENT));
     //saveData();
+}
+
+function deleteBook(bookId) {
+    const targetIndex = findBookIndex(bookId);
+    if (targetIndex == -1) return;
+    books.splice(targetIndex, 1);
+    document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
 function updateStatusOnSubmitButtonText(bookIsCompleteCheckbox) {
