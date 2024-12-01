@@ -164,17 +164,4 @@ header {
     }
 }
 
-@media only screen and (max-width: 578px) {
-    .wrapper {
-        margin: 0;
-    }
-
-    .wrapper .container {
-        width: 90%;
-    }
-
-    .form {
-        width: 90%;
-    }
-}
 
