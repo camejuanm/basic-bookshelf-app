@@ -89,10 +89,15 @@ header {
     font-size: 20px;
 }
 
-.form-group > input[type="checkbox"] {
-    justify-content: flex-start;
-    font-size: 20px;
+.form-checkbox {
+    flex-direction: row;
+}
+
+.form-checkbox > input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
     cursor: pointer;
+    align-self: center;
 }
 
 .form-group > button {
