@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Bookshelf App</title>
-
+        <link rel="stylesheet" href="style.css" />
         <!-- Impor script kamu di sini -->
         <!-- Lampirkan `defer` jika pemanggilan dilakukan dalam <head> -->
         <script defer src="main.js"></script>
@@ -14,11 +14,11 @@
             <h1>Bookshelf App</h1>
         </header>
 
-        <main>
-            <section>
+        <main class="wrapper">
+            <section class="container shadow">
                 <h2>Tambah Buku Baru</h2>
-                <form id="bookForm" data-testid="bookForm">
-                    <div>
+                <form class="form" id="bookForm" data-testid="bookForm">
+                    <div class="form-group form-title">
                         <label for="bookFormTitle">Judul</label>
                         <input
                             id="bookFormTitle"
@@ -27,7 +27,7 @@
                             data-testid="bookFormTitleInput"
                         />
                     </div>
-                    <div>
+                    <div class="form-group form-title">
                         <label for="bookFormAuthor">Penulis</label>
                         <input
                             id="bookFormAuthor"
@@ -36,7 +36,7 @@
                             data-testid="bookFormAuthorInput"
                         />
                     </div>
-                    <div>
+                    <div class="form-group form-title">
                         <label for="bookFormYear">Tahun</label>
                         <input
                             id="bookFormYear"
@@ -45,56 +45,76 @@
                             data-testid="bookFormYearInput"
                         />
                     </div>
-                    <div>
+                    <div class="form-group form-title">
                         <label for="bookFormIsComplete">Selesai dibaca</label>
                         <input
                             id="bookFormIsComplete"
+                            class="check-button"
                             type="checkbox"
                             data-testid="bookFormIsCompleteCheckbox"
                             onchange="updateStatusOnSubmitButtonText(this)"
                         />
                     </div>
-                    <button
-                        id="bookFormSubmit"
-                        type="submit"
-                        data-testid="bookFormSubmitButton"
-                    >
-                        Masukkan Buku ke rak
-                        <span id="statusOnSubmitButtonText"
-                            >Belum selesai dibaca</span
+                    <div class="form-group form-title">
+                        <button
+                            id="bookFormSubmit"
+                            type="submit"
+                            data-testid="bookFormSubmitButton"
+                            class="btn-submit"
                         >
-                    </button>
+                            Masukkan Buku ke rak
+                            <span id="statusOnSubmitButtonText"
+                                >Belum selesai dibaca</span
+                            >
+                        </button>
+                    </div>
                 </form>
             </section>
 
-            <section>
+            <section class="container shadow">
                 <h2>Cari Buku</h2>
-                <form id="searchBook" data-testid="searchBookForm">
-                    <label for="searchBookTitle">Judul</label>
-                    <input
-                        id="searchBookTitle"
-                        type="text"
-                        data-testid="searchBookFormTitleInput"
-                    />
-                    <button
-                        id="searchSubmit"
-                        type="submit"
-                        data-testid="searchBookFormSubmitButton"
-                    >
-                        Cari
-                    </button>
+                <form class="form" id="searchBook" data-testid="searchBookForm">
+                    <div class="form-group form-title">
+                        <label for="searchBookTitle">Judul</label>
+                        <input
+                            id="searchBookTitle"
+                            type="text"
+                            data-testid="searchBookFormTitleInput"
+                        />
+                    </div>
+                    <div class="form-group form-title">
+                        <button
+                            id="searchSubmit"
+                            type="submit"
+                            data-testid="searchBookFormSubmitButton"
+                        >
+                            Cari
+                        </button>
+                    </div>
                 </form>
             </section>
 
-            <section>
+            <section class="container shadow">
                 <h2>Belum selesai dibaca</h2>
-                <div
-                    id="incompleteBookList"
-                    data-testid="incompleteBookList"
-                ></div>
+                <div id="incompleteBookList" data-testid="incompleteBookList">
+                    <div data-bookid="1733048215383" data-testid="bookItem">
+                        <h3 data-testid="bookItemTitle">Harry Potter</h3>
+                        <p data-testid="bookItemAuthor">Penulis: JK Rowling</p>
+                        <p>Tahun: 1994</p>
+                        <div>
+                            <button data-testid="bookItemIsCompleteButton">
+                                Selesai Dibaca</button
+                            ><button data-testid="bookItemDeleteButton">
+                                Hapus Buku</button
+                            ><button data-testid="bookItemEditButton">
+                                Edit Buku
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <section>
+            <section class="container shadow">
                 <h2>Selesai dibaca</h2>
                 <div id="completeBookList" data-testid="completeBookList"></div>
             </section>

@@ -53,6 +53,7 @@ function makeBook(bookObject) {
 
     const deleteButton = document.createElement("button");
     deleteButton.setAttribute("data-testid", "bookItemDeleteButton");
+    deleteButton.setAttribute("class", "delete-btn");
     deleteButton.innerText = "Hapus Buku";
 
     const editButton = document.createElement("button");
@@ -72,6 +73,7 @@ function makeBook(bookObject) {
     if (bookObject.isComplete) {
         const completeButton = document.createElement("button");
         completeButton.setAttribute("data-testid", "bookItemIsCompleteButton");
+        completeButton.setAttribute("class", "toggle-btn");
         completeButton.innerText = "Belum Selesai Dibaca";
 
         completeButton.addEventListener("click", function () {
@@ -79,11 +81,13 @@ function makeBook(bookObject) {
         });
 
         const buttonList = document.createElement("div");
+        buttonList.setAttribute("class", "btn-group");
         buttonList.append(completeButton, deleteButton, editButton);
         container.append(buttonList);
     } else {
         const completeButton = document.createElement("button");
         completeButton.setAttribute("data-testid", "bookItemIsCompleteButton");
+        completeButton.setAttribute("class", "toggle-btn");
         completeButton.innerText = "Selesai Dibaca";
 
         completeButton.addEventListener("click", function () {
@@ -91,6 +95,7 @@ function makeBook(bookObject) {
         });
 
         const buttonList = document.createElement("div");
+        buttonList.setAttribute("class", "btn-group");
         buttonList.append(completeButton, deleteButton, editButton);
         container.append(buttonList);
     }
@@ -218,7 +223,7 @@ function searchBook() {
         } else {
             searchForm.nextElementSibling.remove();
             searchForm.after(resultElements);
-        } 
+        }
     }
     searchForm.after(resultElements);
 }
@@ -246,6 +251,7 @@ function createSearchResultElement(bookObject) {
 
     const deleteButton = document.createElement("button");
     deleteButton.setAttribute("search-result-delete", "bookItemDeleteButton");
+    deleteButton.setAttribute("class", "delete-btn");
     deleteButton.innerText = "Hapus Buku";
 
     const editButton = document.createElement("button");
@@ -264,6 +270,7 @@ function createSearchResultElement(bookObject) {
 
     if (bookObject.isComplete) {
         const completeButton = document.createElement("button");
+        completeButton.setAttribute("class", "toggle-btn");
         completeButton.innerText = "Belum Selesai Dibaca";
 
         completeButton.addEventListener("click", function () {
@@ -271,10 +278,12 @@ function createSearchResultElement(bookObject) {
         });
 
         const buttonList = document.createElement("div");
+        buttonList.setAttribute("class", "btn-group");
         buttonList.append(completeButton, deleteButton, editButton);
         container.append(buttonList);
     } else {
         const completeButton = document.createElement("button");
+        completeButton.setAttribute("class", "toggle-btn");
         completeButton.innerText = "Selesai Dibaca";
 
         completeButton.addEventListener("click", function () {
@@ -282,6 +291,7 @@ function createSearchResultElement(bookObject) {
         });
 
         const buttonList = document.createElement("div");
+        buttonList.setAttribute("class", "btn-group");
         buttonList.append(completeButton, deleteButton, editButton);
         container.append(buttonList);
     }
