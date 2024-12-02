@@ -56,10 +56,6 @@ function makeBook(bookObject) {
     deleteButton.setAttribute("class", "delete-btn");
     deleteButton.innerText = "Hapus Buku";
 
-    const editButton = document.createElement("button");
-    editButton.setAttribute("data-testid", "bookItemEditButton");
-    editButton.innerText = "Edit Buku";
-
     const container = document.createElement("div");
     container.setAttribute("data-bookid", bookObject.id);
     container.setAttribute("data-testid", "bookItem");
@@ -82,7 +78,7 @@ function makeBook(bookObject) {
 
         const buttonList = document.createElement("div");
         buttonList.setAttribute("class", "btn-group");
-        buttonList.append(completeButton, deleteButton, editButton);
+        buttonList.append(completeButton, deleteButton);
         container.append(buttonList);
     } else {
         const completeButton = document.createElement("button");
@@ -96,7 +92,7 @@ function makeBook(bookObject) {
 
         const buttonList = document.createElement("div");
         buttonList.setAttribute("class", "btn-group");
-        buttonList.append(completeButton, deleteButton, editButton);
+        buttonList.append(completeButton, deleteButton);
         container.append(buttonList);
     }
     return container;
@@ -254,10 +250,6 @@ function createSearchResultElement(bookObject) {
     deleteButton.setAttribute("class", "delete-btn");
     deleteButton.innerText = "Hapus Buku";
 
-    const editButton = document.createElement("button");
-    editButton.setAttribute("search-result-edit", "bookItemEditButton");
-    editButton.innerText = "Edit Buku";
-
     const container = document.createElement("div");
     container.setAttribute("search-result-id", bookObject.id);
     container.setAttribute("id", "searchResult");
@@ -279,7 +271,7 @@ function createSearchResultElement(bookObject) {
 
         const buttonList = document.createElement("div");
         buttonList.setAttribute("class", "btn-group");
-        buttonList.append(completeButton, deleteButton, editButton);
+        buttonList.append(completeButton, deleteButton);
         container.append(buttonList);
     } else {
         const completeButton = document.createElement("button");
@@ -292,7 +284,7 @@ function createSearchResultElement(bookObject) {
 
         const buttonList = document.createElement("div");
         buttonList.setAttribute("class", "btn-group");
-        buttonList.append(completeButton, deleteButton, editButton);
+        buttonList.append(completeButton, deleteButton);
         container.append(buttonList);
     }
     return container;
