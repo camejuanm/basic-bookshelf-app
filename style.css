@@ -40,27 +40,9 @@ header {
     box-shadow: 0 5px 10px rgba(154, 160, 185, .05), 0 15px 40px rgba(166, 173, 201, .2);
 }
 
-.item {
-    border-radius: 16px;
-    margin-top: 16px;
-    padding: 12px 24px 12px 24px;
-    background: white;
-    display: flex;
-    align-items: center;
-}
-
-.item > .inner h2 {
-    margin-bottom: unset;
-}
-
-.item > .inner p {
-    margin-top: 5px;
-}
-
 .form {
     list-style-type: none;
     padding: 0;
-    border-radius: 3px;
 }
 
 .form-group {
@@ -89,10 +71,6 @@ header {
     font-size: 20px;
 }
 
-.form-checkbox {
-    flex-direction: row;
-}
-
 .form-checkbox > input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
@@ -101,10 +79,6 @@ header {
 }
 
 .form-group > button {
-    font-family: Raleway, sans-serif;
-    border-radius: 16px;
-    padding: 0.5em;
-    border: 2px;
     color: white;
     background-color: #0d6efd;
     font-size: 18px;
@@ -119,6 +93,7 @@ header {
     display: flex;
     gap: 5px;
 }
+
 .btn-group > button {
     font-family: Raleway, sans-serif;
     border-radius: 6px;
